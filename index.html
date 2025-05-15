@@ -19,7 +19,7 @@
     <main class="site-wrapper">
       <section class="top-section container">
         <div class="logo-wrapper">
-          <h1 class="header-md">D&D 5e Spells</h1>
+          <h1>D&D 5e Spells</h1>
         </div>
         <div class="searchbar">
           <input type="text" name="search" placeholder="search spells..." />
@@ -28,7 +28,7 @@
       </section>
       <section class="bottom-section container">
         <div class="sidebar">
-          <h2 class="header-sm">Filter by Class</h2>
+          <h2>Filter by Class</h2>
           <div class="horizontal-divider"></div>
           <ul class="class-filters">
             <li>
@@ -52,19 +52,19 @@
               <p>(2)</p>
             </li>
           </ul>
-          <h2 class="header-sm">Filter by Level</h2>
+          <h2>Filter by Level</h2>
           <div class="horizontal-divider"></div>
           <div class="level-filter">
             <div class="level-control">
               <i class="fas fa-minus"></i>
             </div>
-            <div class="current-level-filter">1</div>
+            <div class="current-level">3</div>
             <div class="level-control">
               <i class="fas fa-plus"></i>
             </div>
           </div>
           <div class="favorites-filter round-pill">
-            <h2 class="header-sm">Favorites</h2>
+            <h2>Favorites</h2>
           </div>
         </div>
         <div class="spell-list">
@@ -117,6 +117,80 @@
         </div>
       </section>
     </main>
+    <div class="modal">
+      <div class="modal-body">
+        <i class="fas fa-times"></i>
+        <div class="modal-header">
+          <h2>Fireball</h2>
+          <div class="level-and-school">
+            <p>Lv. 3</p>
+            <div class="spell-school round-pill">Evocation</div>
+          </div>
+        </div>
+        <div class="horizontal-divider"></div>
+        <div class="spell-description">
+          <p>
+            A bright streak flashes from your pointing finger to a point you
+            choose within range and then blossoms with a low roar into an
+            explosion of flame. Each creature in a 20-foot-radius sphere
+            centered on that point must make a dexterity saving throw. A target
+            takes 8d6 fire damage on a failed save, or half as much damage on a
+            successful one.
+          </p>
+          <br />
+          <p>
+            The fire spreads around corners. It ignites flammable objects in the
+            area that aren't being worn or carried.
+          </p>
+        </div>
+        <div class="horizontal-divider"></div>
+        <table class="spell-stats">
+          <tr>
+            <th>Casting Time</th>
+            <td>1 Action</td>
+          </tr>
+          <tr>
+            <th>Duration</th>
+            <td>Instantaneous</td>
+          </tr>
+          <tr>
+            <th>Range</th>
+            <td>150 feet</td>
+          </tr>
+          <tr>
+            <th>Area of Effect</th>
+            <td>20 foot sphere</td>
+          </tr>
+          <tr>
+            <th>Damage</th>
+            <td class="damage">
+              <div class="slot-controls">
+                <div class="level-control">
+                  <i class="fas fa-minus"></i>
+                </div>
+                <div class="current-level">3</div>
+                <div class="level-control">
+                  <i class="fas fa-plus"></i>
+                </div>
+              </div>
+              <p>6d8 Fire</p>
+            </td>
+          </tr>
+          <tr>
+            <th>Classes</th>
+            <td>1 Action</td>
+          </tr>
+          <tr>
+            <th>Materials</th>
+            <td>1 Action</td>
+          </tr>
+          <tr>
+            <th>Casting Time</th>
+            <td>1 Action</td>
+          </tr>
+        </table>
+      </div>
+    </div>
     <script src="/js/main.js"></script>
   </body>
 </html>

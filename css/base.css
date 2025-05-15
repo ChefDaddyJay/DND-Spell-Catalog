@@ -39,7 +39,7 @@ h4 {
 }
 
 p {
-  margin-top: 0;
+  margin: 0;
 }
 
 button {
@@ -63,17 +63,6 @@ button {
   border-radius: 50rem;
 }
 
-.header-lg {
-  font-size: 5rem;
-  letter-spacing: -2.5px;
-  line-height: 1.05;
-}
-
-.header-md {
-  font-size: 3rem;
-  letter-spacing: -2px;
-}
-
 .sub-header {
   font-size: 1.3125rem;
   line-height: 1.5;
@@ -82,8 +71,9 @@ button {
 }
 
 .horizontal-divider {
-  width: 80%;
+  width: 90%;
   margin: 0.75rem auto;
   height: 1px;
   background-color: #444444;
+  padding: 1px;
 }

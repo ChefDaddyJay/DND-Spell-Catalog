@@ -123,7 +123,7 @@
   margin-bottom: 1rem;
 }
 
-.level-filter .level-control {
+.level-control {
   border: 1px solid var(--color);
   border-radius: 50%;
   width: 2rem;
@@ -135,12 +135,12 @@
   cursor: pointer;
 }
 
-.level-filter .level-control:hover {
+.level-control:hover {
   box-shadow: 0 4px 8px rgba(68, 68, 68, 0.2);
   background: white;
 }
 
-.level-filter .current-level-filter {
+.current-level {
   justify-content: center;
   background: white;
   width: 3rem;
@@ -148,6 +148,7 @@
   display: flex;
   align-items: center;
   box-shadow: 0 0 8px rgba(68, 68, 68, 0.2);
+  pointer-events: none;
 }
 
 .sidebar .favorites-filter {
@@ -266,4 +267,108 @@
   font-weight: 800;
   font-size: 20px;
   transform: translateY(-4px);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+.modal.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-body {
+  width: 40%;
+  height: 90%;
+  background: var(--bg);
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 20px black;
+}
+
+.modal-body .fa-times {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal-body .fa-times:hover {
+  transform: scale(1.1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  width: 80%;
+  margin: 1rem auto;
+}
+
+.modal-header h2 {
+  letter-spacing: 2px;
+  line-height: 1;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.modal-header .level-and-school {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body .spell-description {
+  line-height: 1.2;
+  font-size: 0.8rem;
+  width: 80%;
+  margin: 0 auto;
+  background: white;
+  padding: 0.5rem;
+  max-height: 200px;
+  box-shadow: 0 0 10px rgba(68, 68, 68, 0.2);
+}
+
+.modal-body .spell-stats {
+  width: 80%;
+}
+
+.spell-stats tr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid var(--color);
+}
+
+.spell-stats .damage {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.spell-stats .slot-controls {
+  display: flex;
+  gap: 1rem;
+  margin: 4px auto;
 }
