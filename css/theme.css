@@ -3,6 +3,11 @@
   --color: #444444;
 }
 
+[data-theme="dark"] {
+  --bg: #444444;
+  --color: #f9f9f9;
+}
+
 .theme-tab {
   z-index: 1000;
   border-bottom-left-radius: 24px;
@@ -71,12 +76,13 @@
   position: absolute;
   left: 10px;
   bottom: 8px;
+  font-size: 1.5rem;
   transform: rotate(135deg);
+  cursor: pointer;
+  color: #444444;
+  transition: all 0.3s ease-in-out;
 }
 
 .theme-tab.open .fa-chevron-right {
   transform: rotate(-45deg);
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #444444;
 }

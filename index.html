@@ -17,12 +17,12 @@
   </head>
   <body>
     <main class="site-wrapper">
-      <div class="theme-tab open">
+      <div id="theme" class="theme-tab">
         <p>Theme</p>
         <div class="theme-buttons">
           <button class="light">Light</button><button class="dark">Dark</button>
         </div>
-        <i class="fas fa-chevron-right"></i>
+        <i class="fas fa-chevron-right" data-toggle="theme"></i>
       </div>
       <section class="top-section container">
         <div class="logo-wrapper">
@@ -76,7 +76,7 @@
         </div>
         <div class="spell-list">
           <div class="spells">
-            <div class="spell-block">
+            <div class="spell-block" data-toggle="modal">
               <div class="fav"><i class="fas fa-star"></i></div>
               <h3>Fireball</h3>
               <div class="spell-level">Lv. 3</div>
@@ -124,9 +124,9 @@
         </div>
       </section>
     </main>
-    <div class="modal">
+    <div id="modal" class="modal">
       <div class="modal-body">
-        <i class="fas fa-times"></i>
+        <i class="fas fa-times" data-toggle="modal"></i>
         <div class="modal-header">
           <h2>Fireball</h2>
           <div class="level-and-school">
