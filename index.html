@@ -17,12 +17,12 @@
   </head>
   <body>
     <main class="site-wrapper">
-      <div id="theme" class="theme-tab">
+      <div class="theme-tab">
         <p>Theme</p>
         <div class="theme-buttons">
           <button class="light">Light</button><button class="dark">Dark</button>
         </div>
-        <i class="fas fa-chevron-right" data-toggle="theme"></i>
+        <i class="fas fa-chevron-right"></i>
       </div>
       <section class="top-section container">
         <div class="logo-wrapper">
@@ -76,42 +76,7 @@
         </div>
         <div class="spell-list">
           <div class="spells">
-            <div class="spell-block" data-toggle="modal">
-              <div class="fav"><i class="fas fa-star"></i></div>
-              <h3>Fireball</h3>
-              <div class="spell-level">Lv. 3</div>
-              <div class="spell-school round-pill">Evocation</div>
-            </div>
-            <div class="spell-block">
-              <div class="fav"><i class="fas fa-star"></i></div>
-              <h3>Fireball</h3>
-              <div class="spell-level">Lv. 3</div>
-              <div class="spell-school round-pill">Evocation</div>
-            </div>
-            <div class="spell-block">
-              <div class="fav"><i class="fas fa-star"></i></div>
-              <h3>Fireball</h3>
-              <div class="spell-level">Lv. 3</div>
-              <div class="spell-school round-pill">Evocation</div>
-            </div>
-            <div class="spell-block">
-              <div class="fav"><i class="fas fa-star"></i></div>
-              <h3>Fireball</h3>
-              <div class="spell-level">Lv. 3</div>
-              <div class="spell-school round-pill">Evocation</div>
-            </div>
-            <div class="spell-block">
-              <div class="fav"><i class="fas fa-star"></i></div>
-              <h3>Fireball</h3>
-              <div class="spell-level">Lv. 3</div>
-              <div class="spell-school round-pill">Evocation</div>
-            </div>
-            <div class="spell-block">
-              <div class="fav"><i class="fas fa-star"></i></div>
-              <h3>Fireball</h3>
-              <div class="spell-level">Lv. 3</div>
-              <div class="spell-school round-pill">Evocation</div>
-            </div>
+            <!-- Spell list populated by JavaScript -->
           </div>
           <ul class="spell-list-controls">
             <li><i class="fas fa-chevron-left"></i></li>
@@ -124,80 +89,7 @@
         </div>
       </section>
     </main>
-    <div id="modal" class="modal">
-      <div class="modal-body">
-        <i class="fas fa-times" data-toggle="modal"></i>
-        <div class="modal-header">
-          <h2>Fireball</h2>
-          <div class="level-and-school">
-            <p>Lv. 3</p>
-            <div class="spell-school round-pill">Evocation</div>
-          </div>
-        </div>
-        <div class="horizontal-divider"></div>
-        <div class="spell-description">
-          <p>
-            A bright streak flashes from your pointing finger to a point you
-            choose within range and then blossoms with a low roar into an
-            explosion of flame. Each creature in a 20-foot-radius sphere
-            centered on that point must make a dexterity saving throw. A target
-            takes 8d6 fire damage on a failed save, or half as much damage on a
-            successful one.
-          </p>
-          <br />
-          <p>
-            The fire spreads around corners. It ignites flammable objects in the
-            area that aren't being worn or carried.
-          </p>
-        </div>
-        <div class="horizontal-divider"></div>
-        <table class="spell-stats">
-          <tr>
-            <th>Casting Time</th>
-            <td>1 Action</td>
-          </tr>
-          <tr>
-            <th>Duration</th>
-            <td>Instantaneous</td>
-          </tr>
-          <tr>
-            <th>Range</th>
-            <td>150 feet</td>
-          </tr>
-          <tr>
-            <th>Area of Effect</th>
-            <td>20 foot sphere</td>
-          </tr>
-          <tr>
-            <th>Damage</th>
-            <td class="damage">
-              <div class="slot-controls">
-                <div class="level-control">
-                  <i class="fas fa-minus"></i>
-                </div>
-                <div class="current-level">3</div>
-                <div class="level-control">
-                  <i class="fas fa-plus"></i>
-                </div>
-              </div>
-              <p>6d8 Fire</p>
-            </td>
-          </tr>
-          <tr>
-            <th>Classes</th>
-            <td>1 Action</td>
-          </tr>
-          <tr>
-            <th>Materials</th>
-            <td>1 Action</td>
-          </tr>
-          <tr>
-            <th>Casting Time</th>
-            <td>1 Action</td>
-          </tr>
-        </table>
-      </div>
-    </div>
+    <script src="/js/modals.js"></script>
     <script src="/js/main.js"></script>
   </body>
 </html>

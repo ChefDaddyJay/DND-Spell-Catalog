@@ -226,6 +226,8 @@
   background: var(--color);
   color: var(--bg);
   padding: 0.5rem 1rem;
+  min-width: 150px;
+  text-align: center;
 }
 
 .spell-list-controls {
@@ -359,6 +361,11 @@
   align-items: center;
   width: 100%;
   border-bottom: 1px solid var(--color);
+}
+
+.spell-stats tr td {
+  display: flex;
+  align-items: center;
 }
 
 .spell-stats .damage {
