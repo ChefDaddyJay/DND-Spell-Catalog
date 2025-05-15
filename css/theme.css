@@ -2,3 +2,81 @@
   --bg: #f9f9f9;
   --color: #444444;
 }
+
+.theme-tab {
+  z-index: 1000;
+  border-bottom-left-radius: 24px;
+  padding: 1rem;
+  position: absolute;
+  width: 10rem;
+  height: 6rem;
+  top: -10%;
+  right: -10%;
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 3.2rem;
+  padding-bottom: 6rem;
+  background: white;
+  box-shadow: -4px 4px 10px rgba(68, 68, 68, 0.2);
+}
+
+.theme-tab.open {
+  top: 0;
+  right: 0;
+}
+
+.theme-tab p {
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 2.5;
+}
+
+.theme-buttons {
+  width: max-content;
+}
+
+.theme-buttons button {
+  border: none;
+  padding: 0.5rem;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px rgba(68, 68, 68, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.theme-buttons button:hover {
+  box-shadow: 0 0 16px rgba(68, 68, 68, 0.4);
+}
+
+.theme-buttons button.light {
+  color: #444444;
+  background-color: #f9f9f9;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.theme-buttons button.dark {
+  color: #f9f9f9;
+  background-color: #444444;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.theme-tab .fa-chevron-right {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  transform: rotate(135deg);
+}
+
+.theme-tab.open .fa-chevron-right {
+  transform: rotate(-45deg);
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #444444;
+}
