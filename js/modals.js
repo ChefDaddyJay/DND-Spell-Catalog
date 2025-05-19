@@ -25,6 +25,20 @@ function buildDamageStat(stat, slot, cell) {
   cell.append(controls, dmg);
 }
 
+function closeModal(event) {
+  const modal = document.querySelector(".modal.open");
+  if (!modal) return;
+  if (
+    event.key === "Escape" ||
+    event.target === modal ||
+    event.target.classList.contains("fa-times")
+  ) {
+    modal.classList.remove("open");
+    document.removeChild(modal);
+    document.removeEventListener("click", closeModal);
+    document.removeEventListener("keydown", closeModal);
+  }
+}
 function buildModal(spell) {
   const modal = document.createElement("div");
   const modalBody = document.createElement("div");
@@ -35,6 +49,7 @@ function buildModal(spell) {
   const level = document.createElement("p");
   const school = document.createElement("div");
   const divider = document.createElement("div");
+  const descWrapper = document.createElement("div");
   const desc = document.createElement("div");
   const statsTable = document.createElement("table");
   const labels = [
@@ -61,9 +76,7 @@ function buildModal(spell) {
 
   close.classList.add("fas");
   close.classList.add("fa-times");
-  close.addEventListener("click", () => {
-    modal.classList.remove("open");
-  });
+  close.addEventListener("click", closeModal);
 
   modalHeader.classList.add("modal-header");
 
@@ -80,8 +93,14 @@ function buildModal(spell) {
 
   divider.classList.add("horizontal-divider");
 
+  descWrapper.classList.add("desc-wrapper");
   desc.classList.add("spell-description");
-  desc.innerText = spell.desc;
+  spell.desc.forEach((line) => {
+    const p = document.createElement("p");
+    p.innerText = line;
+    desc.appendChild(p);
+  });
+  descWrapper.appendChild(desc);
 
   stats.forEach((stat, i) => {
     const row = document.createElement("tr");
@@ -108,7 +127,7 @@ function buildModal(spell) {
           );
           break;
         case "Classes":
-          data.innerText = stat.map((c) => c.name);
+          data.innerText = stat.map((c) => c.name).join(", ");
           break;
         default:
           data.innerText = stat;
@@ -123,11 +142,15 @@ function buildModal(spell) {
     close,
     modalHeader,
     divider,
-    desc,
+    descWrapper,
     divider.cloneNode(),
     statsTable
   );
   modal.appendChild(modalBody);
   main.appendChild(modal);
+
+  document.addEventListener("click", closeModal);
+  document.addEventListener("keydown", closeModal);
+
   return modal;
 }

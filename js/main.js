@@ -3,7 +3,8 @@ const api = "https://www.dnd5eapi.co";
 const spellsUrl = "/api/2014/spells/";
 const spellList = document.querySelector(".spells");
 const spellsPerPage = 6;
-const currentSpells = {};
+let currentPage = 1;
+const pageControls = document.querySelector(".spell-list-controls");
 const main = document.querySelector(".site-wrapper");
 const themeTab = document.querySelector(".theme-tab");
 const themeOptions = document.querySelectorAll("[data-theme]");
@@ -56,7 +57,6 @@ async function buildSpellBlock(spell) {
       });
 
       spellBlock.append(fav, name, lvl, school);
-      currentSpells[spell.index] = spellData;
       return spellBlock;
     })
     .catch((error) => console.error(error));
@@ -76,7 +76,11 @@ fetch(api + spellsUrl, requestOptions)
   .then((data) => {
     const spells = data.results;
     const spellBlocks = [];
-    for (let i = 0; i < spellsPerPage; i++) {
+    for (
+      let i = (currentPage - 1) * spellsPerPage;
+      i < currentPage * spellsPerPage;
+      i++
+    ) {
       spellBlocks.push(buildSpellBlock(spells[i]));
     }
 

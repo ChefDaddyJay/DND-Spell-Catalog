@@ -240,7 +240,6 @@
 
 .spell-list-controls li {
   font-weight: 500;
-  cursor: pointer;
   padding: 0.5rem;
   width: 2rem;
   height: 2rem;
@@ -249,10 +248,17 @@
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease-in-out;
+  pointer-events: none;
 }
 
-.spell-list-controls li:hover {
+.spell-list-controls li.page {
+  pointer-events: all;
+}
+
+.spell-list-controls .page:hover {
   box-shadow: 0 4px 8px rgba(68, 68, 68, 0.2);
+  cursor: pointer;
+  pointer-events: all;
 }
 
 .spell-list-controls:first-child {
@@ -340,15 +346,30 @@
   justify-content: center;
 }
 
-.modal-body .spell-description {
-  line-height: 1.2;
-  font-size: 0.8rem;
-  width: 80%;
+.modal-body .desc-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
   margin: 0 auto;
   background: white;
-  padding: 0.5rem;
   max-height: 200px;
+  width: 80%;
   box-shadow: 0 0 10px rgba(68, 68, 68, 0.2);
+}
+
+.desc-wrapper .spell-description {
+  line-height: 1.2;
+  font-size: 0.8rem;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(68, 68, 68, 0.5) rgba(0, 0, 0, 0);
+}
+
+.spell-description p {
+  padding: 0.5rem;
 }
 
 .modal-body .spell-stats {

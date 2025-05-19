@@ -79,12 +79,16 @@
             <!-- Spell list populated by JavaScript -->
           </div>
           <ul class="spell-list-controls">
-            <li><i class="fas fa-chevron-left"></i></li>
-            <li class="current-page">1</li>
-            <li>2</li>
-            <li>3</li>
+            <li class="page" data-page="prev">
+              <i class="fas fa-chevron-left"></i>
+            </li>
+            <li></li>
+            <li class="current-page" data-page="1">1</li>
+            <li class="page" data-page="2">2</li>
             <li>...</li>
-            <li><i class="fas fa-chevron-right"></i></li>
+            <li class="page" data-page="next">
+              <i class="fas fa-chevron-right"></i>
+            </li>
           </ul>
         </div>
       </section>
