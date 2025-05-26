@@ -19,7 +19,6 @@ body {
   font-weight: 400;
   line-height: 1.5;
   color: var(--color-text);
-  background-color: var(--bg);
   text-align: left;
 }
 

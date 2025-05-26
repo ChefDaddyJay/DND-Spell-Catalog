@@ -34,7 +34,7 @@ function closeModal(event) {
     event.target.classList.contains("fa-times")
   ) {
     modal.classList.remove("open");
-    document.removeChild(modal);
+    main.removeChild(modal);
     document.removeEventListener("click", closeModal);
     document.removeEventListener("keydown", closeModal);
   }
@@ -113,11 +113,6 @@ function buildModal(spell) {
     if (stat) {
       switch (labels[i]) {
         case "Damage":
-          console.log(
-            Object.keys(
-              stat.damage_at_slot_level || stat.damage_at_character_level
-            )
-          );
           buildDamageStat(
             stat,
             Object.keys(

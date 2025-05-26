@@ -12,11 +12,11 @@
   z-index: 1000;
   border-bottom-left-radius: 24px;
   padding: 1rem;
-  position: absolute;
+  position: fixed;
   width: 10rem;
   height: 6rem;
-  top: -10%;
-  right: -10%;
+  top: -4rem;
+  right: -7.5rem;
   transition: all 0.5s ease-in-out;
   display: flex;
   flex-direction: column;
@@ -24,6 +24,7 @@
   padding-left: 3.2rem;
   padding-bottom: 6rem;
   background: white;
+  color: #444444;
   box-shadow: -4px 4px 10px rgba(68, 68, 68, 0.2);
 }
 

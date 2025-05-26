@@ -1,5 +1,5 @@
 .site-wrapper {
-  background: white;
+  background: var(--bg);
   position: fixed;
   top: 0;
   left: 0;
@@ -82,14 +82,16 @@
   text-align: center;
 }
 
-.sidebar ul {
+.sidebar .class-filters {
   list-style: none;
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-height: 200px;
+  overflow-y: scroll;
 }
 
-.sidebar ul li {
+.sidebar .class-filters li {
   line-height: 2;
   letter-spacing: 1px;
   border-bottom: 1px solid var(--color);
@@ -101,17 +103,17 @@
   cursor: pointer;
 }
 
-.sidebar ul li:hover {
+.sidebar .class-filters li:hover {
   transform: scale(1.2);
   font-weight: 800;
 }
 
-.sidebar ul li.active {
+.sidebar .class-filters li.active {
   transform: scale(1.2);
   font-weight: 800;
 }
 
-.sidebar ul li p {
+.sidebar .class-filters li p {
   margin-top: 0.5rem;
   margin-bottom: 0;
 }
@@ -277,6 +279,11 @@
   transform: translateY(-4px);
 }
 
+.spell-list-controls .inactive {
+  font-weight: 400;
+  transform: scale(0.8);
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -299,7 +306,7 @@
 }
 
 .modal-body {
-  width: 40%;
+  width: 45%;
   height: 90%;
   background: var(--bg);
   padding: 2rem;
@@ -328,6 +335,7 @@
   display: flex;
   justify-content: space-between;
   align-items: end;
+  flex-wrap: wrap;
   width: 80%;
   margin: 1rem auto;
 }
@@ -342,8 +350,9 @@
 .modal-header .level-and-school {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: end;
   justify-content: center;
+  width: 100%;
 }
 
 .modal-body .desc-wrapper {
@@ -366,6 +375,7 @@
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: rgba(68, 68, 68, 0.5) rgba(0, 0, 0, 0);
+  color: #444444;
 }
 
 .spell-description p {

@@ -1,14 +1,17 @@
 const myHeaders = new Headers();
 const api = "https://www.dnd5eapi.co";
-const spellsUrl = "/api/2014/spells/";
+const spellsUrl = "/api/2014/spells/?level=0";
 const spellList = document.querySelector(".spells");
-const spellsPerPage = 6;
-let currentPage = 1;
-const pageControls = document.querySelector(".spell-list-controls");
+const spellListControls = document.querySelector(".spell-list-controls");
 const main = document.querySelector(".site-wrapper");
 const themeTab = document.querySelector(".theme-tab");
-const themeOptions = document.querySelectorAll("[data-theme]");
+const themeLight = document.querySelector(".theme-buttons .light");
+const themeDark = document.querySelector(".theme-buttons .dark");
 const themeToggle = document.querySelector(".theme-tab i");
+const root = document.documentElement;
+let pageContent = [];
+
+root.setAttribute("data-theme", localStorage.getItem("theme") || "light");
 
 themeToggle.addEventListener("click", () => {
   if (themeTab.classList.contains("open")) {
@@ -18,48 +21,69 @@ themeToggle.addEventListener("click", () => {
   }
 });
 
-async function buildSpellBlock(spell) {
-  return fetch(api + spell.url)
-    .then((response) => response.text())
-    .then((result) => JSON.parse(result))
-    .then((spellData) => {
-      const spellBlock = document.createElement("div");
-      const fav = document.createElement("div");
-      const name = document.createElement("h3");
-      const lvl = document.createElement("div");
-      const school = document.createElement("div");
+themeLight.addEventListener("click", () => {
+  root.dataset.theme = "light";
+  localStorage.setItem("theme", "light");
+  themeTab.classList.remove("open");
+});
 
-      spellBlock.classList.add("spell-block");
-      spellBlock.setAttribute("data-toggle", spellData.index);
+themeDark.addEventListener("click", () => {
+  root.dataset.theme = "dark";
+  localStorage.setItem("theme", "dark");
+  themeTab.classList.remove("open");
+});
 
-      fav.classList.add("fav");
-      fav.innerHTML = '<i class="fas fa-star"></i>';
+function buildSpellBlock(spell) {
+  const spellBlock = document.createElement("div");
+  const fav = document.createElement("div");
+  const name = document.createElement("h3");
+  const lvl = document.createElement("div");
+  const school = document.createElement("div");
 
-      name.innerText = spellData.name;
+  spellBlock.classList.add("spell-block");
+  spellBlock.setAttribute("data-toggle", spell.index);
 
-      lvl.classList.add("spell-level");
-      lvl.innerText = `Lv. ${spellData.level}`;
+  fav.classList.add("fav");
+  fav.innerHTML = '<i class="fas fa-star"></i>';
 
-      school.classList.add("spell-school");
-      school.classList.add("round-pill");
-      school.innerText = spellData.school.name;
+  name.innerText = spell.name;
 
-      spellBlock.addEventListener("click", () => {
-        const modal =
-          document.getElementById(spell.index) || buildModal(spellData);
-        setTimeout(() => {
-          if (modal.classList.contains("open")) {
-            modal.classList.remove("open");
-          } else {
-            modal.classList.add("open");
-          }
-        }, 100);
-      });
+  lvl.classList.add("spell-level");
+  lvl.innerText = `Lv. ${spell.level}`;
 
-      spellBlock.append(fav, name, lvl, school);
-      return spellBlock;
-    })
-    .catch((error) => console.error(error));
+  school.classList.add("spell-school");
+  school.classList.add("round-pill");
+  school.innerText = spell.school.name;
+
+  spellBlock.addEventListener("click", () => {
+    const modal = document.getElementById(spell.index) || buildModal(spell);
+    setTimeout(() => {
+      if (modal.classList.contains("open")) {
+        modal.classList.remove("open");
+      } else {
+        modal.classList.add("open");
+      }
+    }, 100);
+  });
+
+  spellBlock.append(fav, name, lvl, school);
+  return spellBlock;
+}
+
+async function fetchSpell(spell) {
+  try {
+    const response = await fetch(api + spell.url);
+    if (response.ok) {
+      const result = await response.text();
+      return JSON.parse(result);
+    } else {
+      console.log(response.status);
+      return null;
+    }
+  } catch (error) {
+    console.log("Fetch error:", error);
+    return null;
+  }
 }
 
 myHeaders.append("Accept", "application/json");
@@ -73,20 +97,18 @@ const requestOptions = {
 fetch(api + spellsUrl, requestOptions)
   .then((response) => response.text())
   .then((result) => JSON.parse(result))
-  .then((data) => {
-    const spells = data.results;
-    const spellBlocks = [];
-    for (
-      let i = (currentPage - 1) * spellsPerPage;
-      i < currentPage * spellsPerPage;
-      i++
-    ) {
-      spellBlocks.push(buildSpellBlock(spells[i]));
-    }
+  .then((data) => Promise.all(data.results.map((res) => fetchSpell(res))))
+  .then((spells) => {
+    pageContent = spells.map((spell) => buildSpellBlock(spell));
+    const pagination = new Pagination(spellList, spellListControls);
+    const filters = new Filters(
+      spells,
+      pagination,
+      document.querySelector(".class-filters"),
+      document.querySelector(".level-filter")
+    );
 
-    return Promise.all(spellBlocks);
-  })
-  .then((blocks) => {
-    blocks.forEach((block) => spellList.appendChild(block));
+    filters.render();
+    pagination.render();
   })
   .catch((error) => console.error(error));
