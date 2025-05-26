@@ -1,15 +1,17 @@
 class Pagination {
-  constructor(pageContainer, controls, currentPage = 1, itemsPerPage = 6) {
-    this.totalPages = pageContent.length / itemsPerPage;
+  constructor(
+    pageContainer,
+    controls,
+    content = [],
+    currentPage = 1,
+    itemsPerPage = 6
+  ) {
     this.pageContainer = pageContainer;
+    this.pageContent = content;
+    this.totalPages = this.pageContent.length / itemsPerPage;
     this.controls = controls;
     this.currentPage = currentPage;
     this.itemsPerPage = itemsPerPage;
-  }
-
-  setTotalPages(num) {
-    this.totalPages = num;
-    this.setPage(1);
   }
 
   setPage(page) {
@@ -17,6 +19,12 @@ class Pagination {
       this.currentPage = page;
     }
     this.render();
+  }
+
+  updateContent(content) {
+    this.pageContent = content;
+    this.totalPages = Math.ceil(this.pageContent.length / this.itemsPerPage);
+    this.setPage(1);
   }
 
   render() {
@@ -28,10 +36,10 @@ class Pagination {
     this.pageContainer.innerHTML = "";
     for (
       let i = (this.currentPage - 1) * this.itemsPerPage;
-      i < this.currentPage * this.itemsPerPage && i < pageContent.length;
+      i < this.currentPage * this.itemsPerPage && i < this.pageContent.length;
       i++
     ) {
-      this.pageContainer.appendChild(pageContent[i]);
+      this.pageContainer.appendChild(this.pageContent[i].element);
     }
   }
 

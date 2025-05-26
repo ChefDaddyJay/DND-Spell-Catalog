@@ -1,5 +1,5 @@
 class Filters {
-  schools = [
+  schoolsList = [
     "Evocation",
     "Conjuration",
     "Divination",
@@ -10,27 +10,24 @@ class Filters {
     "Illusion",
   ];
   constructor(
-    spells,
-    pagination,
+    srcURL,
+    contentContainer,
+    pageControls,
     schoolControls,
     levelConrols,
     activeLevel = 0,
     favorites = []
   ) {
-    this.pagination = pagination;
+    this.src = srcURL;
+    this.pagination = new Pagination(contentContainer, pageControls);
     this.schoolControls = schoolControls;
     this.levelControls = levelConrols;
     this.activeLevel = activeLevel;
-    this.favorites = favorites;
-    this.schools = {};
-    spells.forEach((spell) => {
-      if (this.schools[spell.school.name]) {
-        this.schools[spell.school.name]++;
-      } else {
-        this.schools[spell.school.name] = 1;
-      }
-    });
     this.activeFilter = "";
+    this.schools = {};
+    this.schoolsList.forEach((school) => (this.schools[school] = 0));
+
+    this.favorites = favorites;
     this.filterElements = [];
   }
   setActiveFilter(school) {
@@ -48,24 +45,23 @@ class Filters {
       elm.classList.add("active");
       this.activeFilter = school;
     }
-    this.fetchContent().then(() => {
-      this.pagination.setTotalPages(
-        pageContent.length / this.pagination.itemsPerPage
-      );
-      this.pagination.render();
-    });
+    this.fetchContent().then(() => this.pagination.render());
   }
   setActiveLevel(lvl) {
     if (lvl < 0 || lvl > 9) return;
 
     this.activeLevel = lvl;
-    this.renderLevelFilter();
     this.fetchContent().then(() => {
-      this.pagination.setTotalPages(
-        pageContent.length / this.pagination.itemsPerPage
-      );
+      this.renderSchoolsList();
+      this.renderLevelFilter();
       this.pagination.render();
     });
+  }
+  getSchoolCounts() {
+    this.schoolsList.forEach((school) => (this.schools[school] = 0));
+    this.pagination.pageContent.forEach(
+      (block) => this.schools[block.spell.school.name]++
+    );
   }
   buildLevelControl(dir) {
     const control = document.createElement("div");
@@ -81,8 +77,10 @@ class Filters {
   render() {
     this.renderSchoolsList();
     this.renderLevelFilter();
+    this.pagination.render();
   }
   renderSchoolsList() {
+    this.schoolControls.innerHTML = "";
     Object.entries(this.schools).forEach((school) => {
       const filter = document.createElement("li");
       const name = document.createElement("p");
@@ -114,14 +112,13 @@ class Filters {
 
   async fetchContent() {
     const response = await fetch(
-      `${api}${spellsUrl}${
-        this.activeFilter !== "" ? `&school=${this.activeFilter}` : ""
-      }`,
+      `${this.src}?level=${this.activeLevel}&school=${this.activeFilter}`,
       requestOptions
     );
     const text = await response.text();
     const results = JSON.parse(text).results;
     const spells = await Promise.all(results.map((res) => fetchSpell(res)));
-    pageContent = spells.map((spell) => buildSpellBlock(spell));
+    this.pagination.updateContent(spells.map((spell) => new SpellBlock(spell)));
+    this.getSchoolCounts();
   }
 }
