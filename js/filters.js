@@ -15,20 +15,23 @@ class Filters {
     pageControls,
     schoolControls,
     levelConrols,
-    activeLevel = 0,
-    favorites = []
+    favoritesContainer,
+    activeLevel = 0
   ) {
     this.src = srcURL;
     this.pagination = new Pagination(contentContainer, pageControls);
     this.schoolControls = schoolControls;
     this.levelControls = levelConrols;
+    this.favoritesContainer = favoritesContainer;
     this.activeLevel = activeLevel;
     this.activeFilter = "";
+    this.activeFavorites = false;
     this.schools = {};
     this.schoolsList.forEach((school) => (this.schools[school] = 0));
-
-    this.favorites = favorites;
-    this.filterElements = [];
+    this.readFavorites();
+  }
+  isFavorite(spellIndex) {
+    return this.favorites.includes(spellIndex);
   }
   setActiveFilter(school) {
     const elm = this.filterElements.find(
@@ -57,11 +60,33 @@ class Filters {
       this.pagination.render();
     });
   }
-  getSchoolCounts() {
+  updateSchoolCounts() {
     this.schoolsList.forEach((school) => (this.schools[school] = 0));
     this.pagination.pageContent.forEach(
       (block) => this.schools[block.spell.school.name]++
     );
+  }
+  readFavorites() {
+    this.favorites = localStorage.getItem("favorites")?.split(",") || [];
+  }
+  toggleFavorites(filter) {
+    this.activeFavorites = !this.activeFavorites;
+    if (this.activeFavorites) {
+      this.favoritesContainer.classList.add("active");
+      this.readFavorites();
+      this.fetchFavorites().then(() => this.pagination.render());
+    } else {
+      this.favoritesContainer.classList.remove("active");
+      this.fetchContent().then(() => this.pagination.render());
+    }
+  }
+  updateFavorites(spellIndex) {
+    const i = this.favorites.indexOf(spellIndex);
+    this.favorites =
+      i === -1
+        ? [...this.favorites, spellIndex]
+        : [...this.favorites.slice(0, i), ...this.favorites.slice(i + 1)];
+    localStorage.setItem("favorites", this.favorites);
   }
   buildLevelControl(dir) {
     const control = document.createElement("div");
@@ -75,12 +100,14 @@ class Filters {
     return control;
   }
   render() {
-    this.renderSchoolsList();
     this.renderLevelFilter();
+    this.renderFavoritesButton();
+    this.renderSchoolsList();
     this.pagination.render();
   }
   renderSchoolsList() {
     this.schoolControls.innerHTML = "";
+    this.filterElements = [];
     Object.entries(this.schools).forEach((school) => {
       const filter = document.createElement("li");
       const name = document.createElement("p");
@@ -108,7 +135,14 @@ class Filters {
       this.buildLevelControl("plus")
     );
   }
-  renderFavoritesButton() {}
+
+  renderFavoritesButton() {
+    const button = document.createElement("h2");
+    button.innerText = "Favorites";
+    button.addEventListener("click", () => this.toggleFavorites(this));
+    this.favButton = button;
+    this.favoritesContainer.appendChild(button);
+  }
 
   async fetchContent() {
     const response = await fetch(
@@ -117,8 +151,22 @@ class Filters {
     );
     const text = await response.text();
     const results = JSON.parse(text).results;
-    const spells = await Promise.all(results.map((res) => fetchSpell(res)));
-    this.pagination.updateContent(spells.map((spell) => new SpellBlock(spell)));
-    this.getSchoolCounts();
+    const spells = await Promise.all(
+      results.map((res) => fetchSpell(res.index))
+    );
+    this.pagination.updateContent(
+      spells.map((spell) => new SpellBlock(spell, this))
+    );
+    this.updateSchoolCounts();
+  }
+
+  async fetchFavorites() {
+    const spells = await Promise.all(
+      this.favorites.map((fav) => fetchSpell(fav))
+    );
+    this.pagination.updateContent(
+      spells.map((spell) => new SpellBlock(spell, this))
+    );
+    this.updateSchoolCounts();
   }
 }

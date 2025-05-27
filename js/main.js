@@ -5,12 +5,13 @@ const spellList = document.querySelector(".spells");
 const spellListControls = document.querySelector(".spell-list-controls");
 const schoolFilters = document.querySelector(".school-filters");
 const levelFilter = document.querySelector(".level-filter");
+const favorites = document.querySelector(".favorites-filter");
 const main = document.querySelector(".site-wrapper");
 const root = document.documentElement;
 
-async function fetchSpell(spell) {
+async function fetchSpell(spellIndex) {
   try {
-    const response = await fetch(api + spell.url);
+    const response = await fetch(`${api}${spellsUrl}${spellIndex}`);
     if (response.ok) {
       const result = await response.text();
       return JSON.parse(result);
@@ -37,6 +38,7 @@ const filters = new Filters(
   spellList,
   spellListControls,
   schoolFilters,
-  levelFilter
+  levelFilter,
+  favorites
 );
 filters.fetchContent().then(() => filters.render());

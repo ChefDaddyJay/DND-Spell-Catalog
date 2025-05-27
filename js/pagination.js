@@ -39,6 +39,7 @@ class Pagination {
       i < this.currentPage * this.itemsPerPage && i < this.pageContent.length;
       i++
     ) {
+      this.pageContent[i].buildElement();
       this.pageContainer.appendChild(this.pageContent[i].element);
     }
   }
