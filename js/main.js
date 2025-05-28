@@ -6,6 +6,7 @@ const spellListControls = document.querySelector(".spell-list-controls");
 const schoolFilters = document.querySelector(".school-filters");
 const levelFilter = document.querySelector(".level-filter");
 const favorites = document.querySelector(".favorites-filter");
+const searchbar = document.querySelector(".searchbar");
 const main = document.querySelector(".site-wrapper");
 const root = document.documentElement;
 
@@ -39,6 +40,7 @@ const filters = new Filters(
   spellListControls,
   schoolFilters,
   levelFilter,
-  favorites
+  favorites,
+  searchbar
 );
 filters.fetchContent().then(() => filters.render());

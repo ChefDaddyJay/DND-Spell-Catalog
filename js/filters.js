@@ -16,6 +16,7 @@ class Filters {
     schoolControls,
     levelConrols,
     favoritesContainer,
+    searchbarContainer,
     activeLevel = 0
   ) {
     this.src = srcURL;
@@ -23,12 +24,15 @@ class Filters {
     this.schoolControls = schoolControls;
     this.levelControls = levelConrols;
     this.favoritesContainer = favoritesContainer;
+    this.searchbarContainer = searchbarContainer;
     this.activeLevel = activeLevel;
     this.activeFilter = "";
     this.activeFavorites = false;
+    this.activeSearch = "";
     this.schools = {};
     this.schoolsList.forEach((school) => (this.schools[school] = 0));
     this.readFavorites();
+    this.content = [];
   }
   isFavorite(spellIndex) {
     return this.favorites.includes(spellIndex);
@@ -69,7 +73,7 @@ class Filters {
   readFavorites() {
     this.favorites = localStorage.getItem("favorites")?.split(",") || [];
   }
-  toggleFavorites(filter) {
+  toggleFavorites() {
     this.activeFavorites = !this.activeFavorites;
     if (this.activeFavorites) {
       this.favoritesContainer.classList.add("active");
@@ -99,10 +103,20 @@ class Filters {
     });
     return control;
   }
+  searchContent(query) {
+    const res =
+      query !== ""
+        ? this.content.filter((block) =>
+            block.spell.name.toLowerCase().includes(query.toLowerCase())
+          )
+        : this.content;
+    this.pagination.updateContent(res);
+  }
   render() {
     this.renderLevelFilter();
     this.renderFavoritesButton();
     this.renderSchoolsList();
+    this.renderSearchbar();
     this.pagination.render();
   }
   renderSchoolsList() {
@@ -135,7 +149,6 @@ class Filters {
       this.buildLevelControl("plus")
     );
   }
-
   renderFavoritesButton() {
     const button = document.createElement("h2");
     button.innerText = "Favorites";
@@ -143,7 +156,15 @@ class Filters {
     this.favButton = button;
     this.favoritesContainer.appendChild(button);
   }
-
+  renderSearchbar() {
+    this.searchbarContainer.innerHTML = "";
+    const input = document.createElement("input");
+    input.type = "text";
+    input.name = "search";
+    input.placeholder = "search spells...";
+    input.addEventListener("change", (e) => this.searchContent(e.target.value));
+    this.searchbarContainer.append(input, faIcon("search"));
+  }
   async fetchContent() {
     const response = await fetch(
       `${this.src}?level=${this.activeLevel}&school=${this.activeFilter}`,
@@ -154,19 +175,16 @@ class Filters {
     const spells = await Promise.all(
       results.map((res) => fetchSpell(res.index))
     );
-    this.pagination.updateContent(
-      spells.map((spell) => new SpellBlock(spell, this))
-    );
+    this.content = spells.map((spell) => new SpellBlock(spell, this));
+    this.pagination.updateContent(this.content);
     this.updateSchoolCounts();
   }
-
   async fetchFavorites() {
     const spells = await Promise.all(
       this.favorites.map((fav) => fetchSpell(fav))
     );
-    this.pagination.updateContent(
-      spells.map((spell) => new SpellBlock(spell, this))
-    );
+    this.content = spells.map((spell) => new SpellBlock(spell, this));
+    this.pagination.updateContent(this.content);
     this.updateSchoolCounts();
   }
 }
