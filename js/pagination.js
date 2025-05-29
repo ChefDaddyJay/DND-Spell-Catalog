@@ -27,9 +27,32 @@ class Pagination {
     this.setPage(1);
   }
 
+  sortContent(dir) {
+    this.updateContent(
+      this.pageContent.sort((a, b) => {
+        console.log(dir, a.spell.name, b.spell.name);
+        if (dir === "asc") {
+          return a.spell.name > b.spell.name ? 1 : -1;
+        } else {
+          return a.spell.name < b.spell.name ? 1 : -1;
+        }
+      })
+    );
+  }
+
+  toggleSortTab() {
+    const wrapper = this.parentElement;
+    if (wrapper.classList.contains("active")) {
+      wrapper.classList.remove("active");
+    } else {
+      wrapper.classList.add("active");
+    }
+  }
+
   render() {
     this.renderPage();
     this.renderButtons();
+    this.renderSortTab();
   }
 
   renderPage() {
@@ -59,6 +82,30 @@ class Pagination {
 
     this.controls.innerHTML = "";
     this.controls.append(prevButton, prevPage, current, nextPage, nextButton);
+  }
+
+  renderSortTab() {
+    const wrapper = document.createElement("div");
+    const tab = document.createElement("div");
+    const icon = document.createElement("i");
+    const panel = document.createElement("div");
+    const buttons = document.createElement("ul");
+    const asc = this.sortButton("asc");
+    const desc = this.sortButton("desc");
+
+    wrapper.classList.add("sort-wrapper");
+    tab.classList.add("sort-tab");
+    tab.addEventListener("click", this.toggleSortTab);
+    icon.classList.add("fa-solid");
+    icon.classList.add("fa-ellipsis-vertical");
+    tab.appendChild(icon);
+    panel.classList.add("sort-panel");
+    buttons.classList.add("sort-buttons");
+    buttons.append(asc, desc);
+    panel.appendChild(buttons);
+
+    wrapper.append(tab, panel);
+    this.pageContainer.appendChild(wrapper);
   }
 
   pageButton(page, active = true) {
@@ -103,4 +150,15 @@ class Pagination {
     }
     return button;
   };
+
+  sortButton(dir) {
+    const btn = document.createElement("li");
+
+    btn.classList.add("sort-option");
+    btn.appendChild(
+      dir === "asc" ? faIcon("chevron-up") : faIcon("chevron-down")
+    );
+    btn.addEventListener("click", () => this.sortContent(dir));
+    return btn;
+  }
 }

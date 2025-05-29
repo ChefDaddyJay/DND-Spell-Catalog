@@ -182,6 +182,78 @@
   flex-grow: 1;
 }
 
+.spell-list {
+  position: relative;
+}
+
+.spell-list .sort-wrapper {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.sort-wrapper .sort-tab {
+  position: absolute;
+  top: 0.5rem;
+  right: -14px;
+  z-index: 2;
+  cursor: pointer;
+  background: var(--bg);
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  padding-left: 7px;
+  padding-right: 5px;
+  border-bottom: 1px solid black;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.sort-wrapper .sort-panel {
+  border: 1px solid black;
+  border-left: none;
+  background: var(--bg);
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  position: relative;
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.sort-wrapper.active {
+  right: -34px;
+}
+
+.sort-wrapper.active .sort-panel {
+  z-index: 0;
+  opacity: 1;
+}
+
+.sort-panel .sort-buttons {
+  list-style: none;
+  padding: 0.5rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sort-panel .sort-option {
+  border-radius: 100%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sort-panel .sort-option:hover {
+  background: #fff;
+  box-shadow: 0 2px rgba(68, 68, 168, 0.2);
+}
+
 .spell-list .spells {
   height: 100%;
   display: flex;
