@@ -1,0 +1,44 @@
+@media (min-width: 768px) {
+  .spell-block h3 {
+    font-size: x-large;
+  }
+}
+
+@media (min-width: 1024px) {
+  .top-section .searchbar input {
+    padding: 1.5rem;
+  }
+
+  .bottom-section {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .bottom-section .sidebar {
+    gap: 1rem;
+    width: 30%;
+    min-height: 100%;
+    max-height: 100%;
+    padding-top: 1rem;
+  }
+
+  .bottom-section .sidebar .filters-menu {
+    display: none;
+  }
+
+  .bottom-section .spell-list {
+    height: 100%;
+  }
+
+  .bottom-section .spell-list .spells {
+    overflow: hidden;
+  }
+
+  .bottom-section .spell-list .spell-list-controls {
+    display: flex;
+  }
+
+  .modal .modal-body {
+    width: 35%;
+  }
+}

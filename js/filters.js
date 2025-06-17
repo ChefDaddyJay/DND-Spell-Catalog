@@ -150,6 +150,7 @@ class Filters {
     );
   }
   renderFavoritesButton() {
+    this.favoritesContainer.innerHTML = "";
     const button = document.createElement("h2");
     button.innerText = "Favorites";
     button.addEventListener("click", () => this.toggleFavorites(this));

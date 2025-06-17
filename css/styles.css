@@ -5,18 +5,22 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 2rem;
+  padding: 0;
+  padding-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--color);
+  width: 100vw;
+  height: 100vh;
 }
 
 .top-section {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 1rem;
-  gap: 3rem;
+  padding: 1rem;
+  gap: 1rem;
+  height: 15%;
 }
 
 .top-section .logo-wrapper {
@@ -32,14 +36,15 @@
   height: 100%;
   align-items: center;
   position: relative;
+  gap: 1rem;
 }
 
 .top-section .searchbar input {
   width: 100%;
-  height: 80%;
-  padding: 1rem 2rem;
+  height: 50%;
+  padding: 0.5rem;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 1;
   letter-spacing: 0.5px;
   border-radius: 50rem;
   border: none;
@@ -64,52 +69,102 @@
 
 .bottom-section {
   display: flex;
-  height: 100%;
+  flex-direction: column;
+  overflow-y: hidden;
+  width: 100%;
+  height: 88%;
 }
 
 .bottom-section .sidebar {
-  width: 30%;
-  border: 1px solid var(--color);
-  border-radius: 1rem;
-  padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  margin-right: 3rem;
+  gap: 2rem;
+  width: 100%;
+  min-height: 2rem;
+  max-height: 2rem;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1rem;
+  overflow: clip;
+  border: 1px solid var(--color);
+  border-radius: 1rem;
   background: var(--bg);
+  transition: all 0.3s ease-in-out;
 }
 
-.sidebar h2 {
+.bottom-section .sidebar.open {
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.bottom-section .sidebar h2 {
   text-align: center;
+  margin: 0;
+  font-size: large;
+}
+
+.bottom-section .sidebar.open .horizontal-divider {
+  margin: 0.5rem auto;
+}
+
+.bottom-section .sidebar .filters-menu {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 2rem;
+  max-height: 2rem;
+}
+
+.bottom-section .sidebar .filters-menu h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: x-large;
+}
+
+.bottom-section .sidebar .filters-menu i {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.bottom-section .sidebar .filters-menu.open i {
+  transform: rotate(180deg);
 }
 
 .sidebar .school-filters {
   list-style: none;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   max-height: 200px;
+  padding: 0;
+  margin: 0;
   overflow-y: scroll;
 }
 
 .sidebar .school-filters li {
-  line-height: 2;
-  letter-spacing: 1px;
-  border-bottom: 1px solid var(--color);
   display: flex;
   justify-content: space-between;
   width: 80%;
-  padding: 0 1rem;
+  padding: 0;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--color);
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
 }
 
 .sidebar .school-filters li:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   font-weight: 800;
 }
 
 .sidebar .school-filters li.active {
-  transform: scale(1.2);
+  transform: scale(1.1);
   font-weight: 800;
 }
 
@@ -154,6 +209,7 @@
 }
 
 .sidebar .favorites-filter {
+  margin: auto 0.5rem 1rem 0.5rem;
   border: 1px solid var(--color);
   box-shadow: none;
   transition: all 0.3s ease-in-out;
@@ -173,70 +229,77 @@
 }
 
 .bottom-section .spell-list {
-  border: 1px solid var(--color);
-  border-radius: 1rem;
-  padding: 1.2rem;
+  position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
   flex-grow: 1;
-}
-
-.spell-list {
-  position: relative;
+  height: 88%;
+  padding: 1rem;
+  border: 1px solid var(--color);
+  border-radius: 1rem;
+  background: var(--bg);
 }
 
 .spell-list .sort-wrapper {
+  height: 42px;
+  width: 30%;
+  max-width: 100px;
   position: absolute;
-  top: 1rem;
-  right: 0;
+  top: 1.5rem;
+  right: -1rem;
   transition: all 0.3s ease-in-out;
 }
 
 .sort-wrapper .sort-tab {
+  border: 1px solid var(--color);
+  width: 20%;
+  min-width: 25px;
   position: absolute;
-  top: 0.5rem;
-  right: -14px;
-  z-index: 2;
-  cursor: pointer;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--bg);
-  border-right: 1px solid black;
-  border-top: 1px solid black;
-  padding-left: 7px;
-  padding-right: 5px;
-  border-bottom: 1px solid black;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  box-shadow: 0 4px 8px rgba(68, 68, 68, 0.2);
 }
 
 .sort-wrapper .sort-panel {
-  border: 1px solid black;
-  border-left: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 80%;
+  min-width: 70px;
   background: var(--bg);
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-  position: relative;
-  z-index: -1;
-  opacity: 0;
+  border: 1px solid var(--color);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
   transition: all 0.3s ease-in-out;
-}
-
-.sort-wrapper.active {
-  right: -34px;
+  transform: scaleX(0);
+  transform-origin: right;
+  box-shadow: 0 4px 8px rgba(68, 68, 68, 0.2);
 }
 
 .sort-wrapper.active .sort-panel {
-  z-index: 0;
-  opacity: 1;
+  transform: scaleX(1);
 }
 
 .sort-panel .sort-buttons {
   list-style: none;
-  padding: 0.5rem;
-  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .sort-panel .sort-option {
@@ -254,20 +317,21 @@
   box-shadow: 0 2px rgba(68, 68, 168, 0.2);
 }
 
-.spell-list .spells {
-  height: 100%;
+.bottom-section .spell-list .spells {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 6px;
+  height: 100%;
+  overflow-y: scroll;
 }
 
-.spell-block {
+.bottom-section .spell-list .spells .spell-block {
   display: flex;
   width: 100%;
   border: 1px solid var(--color);
   border-radius: 12px;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0;
   box-shadow: 0 4px 8px rgba(68, 68, 68, 0.2);
   transition: all 0.5s ease-in-out;
   cursor: pointer;
@@ -287,26 +351,31 @@
 
 .spell-block h3 {
   flex-grow: 1;
+  display: flex;
+  align-items: center;
+  margin: 0;
   height: 2rem;
-  line-height: 2;
+  width: 2rem;
+  line-height: 1;
 }
 
-.spell-level {
-  padding: 0 1rem;
+.spell-block .spell-level {
+  padding-right: 0.5rem;
   font-size: 0.825rem;
 }
 
-.spell-school {
+.spell-block .spell-school {
   background: var(--color);
   color: var(--bg);
-  padding: 0.5rem 1rem;
-  min-width: 150px;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  width: 115px;
   text-align: center;
 }
 
-.spell-list-controls {
+.bottom-section .spell-list .spell-list-controls {
   list-style: none;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   gap: 2rem 32px;
@@ -378,7 +447,7 @@
 }
 
 .modal-body {
-  width: 45%;
+  width: 85%;
   height: 90%;
   background: var(--bg);
   padding: 2rem;

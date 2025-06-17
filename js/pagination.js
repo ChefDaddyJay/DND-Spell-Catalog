@@ -4,7 +4,7 @@ class Pagination {
     controls,
     content = [],
     currentPage = 1,
-    itemsPerPage = 6
+    itemsPerPage = 7
   ) {
     this.pageContainer = pageContainer;
     this.pageContent = content;
@@ -30,7 +30,6 @@ class Pagination {
   sortContent(dir) {
     this.updateContent(
       this.pageContent.sort((a, b) => {
-        console.log(dir, a.spell.name, b.spell.name);
         if (dir === "asc") {
           return a.spell.name > b.spell.name ? 1 : -1;
         } else {
@@ -50,9 +49,20 @@ class Pagination {
   }
 
   render() {
-    this.renderPage();
-    this.renderButtons();
+    if (media.isDesktop) {
+      this.renderPage();
+      this.renderButtons();
+    } else {
+      this.renderAll();
+    }
     this.renderSortTab();
+  }
+
+  renderAll() {
+    this.pageContainer.innerHTML = "";
+    this.pageContent.forEach((elm) =>
+      this.pageContainer.appendChild(elm.element)
+    );
   }
 
   renderPage() {
@@ -62,7 +72,6 @@ class Pagination {
       i < this.currentPage * this.itemsPerPage && i < this.pageContent.length;
       i++
     ) {
-      this.pageContent[i].buildElement();
       this.pageContainer.appendChild(this.pageContent[i].element);
     }
   }

@@ -45,6 +45,8 @@ class SpellBlock {
       }, 100);
     });
 
-    this.element.append(fav, name, lvl, school);
+    this.element.append(fav, name);
+    if (!media.isPhone) this.element.appendChild(lvl);
+    this.element.appendChild(school);
   }
 }
