@@ -76,13 +76,17 @@ class Filters {
       this.fetchContent().then(() => this.pagination.render());
     }
   }
-  updateFavorites(spellIndex) {
+  updateFavorites(spellIndex, remove = false) {
     const i = this.favorites.indexOf(spellIndex);
-    this.favorites =
-      i === -1
-        ? [...this.favorites, spellIndex]
-        : [...this.favorites.slice(0, i), ...this.favorites.slice(i + 1)];
-    localStorage.setItem("favorites", this.favorites);
+
+    if (i === -1 && !remove) {
+      this.favorites.push(spellIndex);
+    } else if (i !== -1 && remove) {
+      this.favorites.splice(i, 1);
+      this.content.splice(i, 1);
+      this.updateContent(this.content);
+    }
+    localStorage.setItem("favorites", this.favorites.join(","));
   }
   buildLevelControl(dir) {
     const control = document.createElement("div");

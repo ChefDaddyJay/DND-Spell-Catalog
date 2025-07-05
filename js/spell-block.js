@@ -19,8 +19,11 @@ class SpellBlock {
     fav.innerHTML = this.filters.isFavorite(this.spell.index)
       ? '<i class="fas fa-star"></i>'
       : '<i class="fa-regular fa-star"></i>';
-    fav.addEventListener("click", () => {
-      this.filters.updateFavorites(this.spell.index);
+    fav.addEventListener("click", (e) => {
+      this.filters.updateFavorites(
+        this.spell.index,
+        e.target.classList.contains("fas")
+      );
       this.buildElement();
     });
 
