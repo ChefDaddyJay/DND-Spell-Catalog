@@ -37,6 +37,13 @@
   align-items: center;
   position: relative;
   gap: 1rem;
+  & i {
+    font-size: 18px;
+    color: var(--color);
+    position: absolute;
+    right: 1.5rem;
+    cursor: pointer;
+  }
 }
 
 .top-section .searchbar input {
@@ -53,18 +60,10 @@
   background: #f9f9f9;
   transition: all 0.3s ease-in-out;
   color: var(--color);
-}
-
-.top-section .searchbar input:focus {
-  outline: 1px solid #444499;
-  box-shadow: 0 4px 12px rgba(68, 68, 168, 0.2);
-}
-
-.top-section .searchbar .fa-search {
-  font-size: 18px;
-  color: var(--color);
-  position: absolute;
-  right: 1.5rem;
+  &:focus {
+    outline: 1px solid #444499;
+    box-shadow: 0 4px 12px rgba(68, 68, 168, 0.2);
+  }
 }
 
 .bottom-section {
@@ -206,6 +205,7 @@
   align-items: center;
   box-shadow: 0 0 8px rgba(68, 68, 68, 0.2);
   pointer-events: none;
+  color: black;
 }
 
 .sidebar .favorites-filter {
@@ -266,6 +266,7 @@
   justify-content: center;
   background: var(--bg);
   box-shadow: 0 4px 8px rgba(68, 68, 68, 0.2);
+  cursor: pointer;
 }
 
 .sort-wrapper .sort-panel {
@@ -310,11 +311,10 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-}
-
-.sort-panel .sort-option:hover {
-  background: #fff;
-  box-shadow: 0 2px rgba(68, 68, 168, 0.2);
+  &:hover {
+    background: #fff;
+    box-shadow: 0 2px rgba(68, 68, 168, 0.2);
+  }
 }
 
 .bottom-section .spell-list .spells {
@@ -323,6 +323,16 @@
   gap: 6px;
   height: 100%;
   overflow-y: scroll;
+}
+
+.spells .empty-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
 }
 
 .bottom-section .spell-list .spells .spell-block {
@@ -335,10 +345,9 @@
   box-shadow: 0 4px 8px rgba(68, 68, 68, 0.2);
   transition: all 0.5s ease-in-out;
   cursor: pointer;
-}
-
-.spell-block:hover {
-  box-shadow: 0 4px 16px rgba(68, 68, 68, 0.4);
+  &:hover {
+    box-shadow: 0 4px 16px rgba(68, 68, 68, 0.4);
+  }
 }
 
 .spell-block .fav {
@@ -466,10 +475,9 @@
   margin: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-}
-
-.modal-body .fa-times:hover {
-  transform: scale(1.1);
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .modal-header {

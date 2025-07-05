@@ -1,14 +1,4 @@
 class Filters {
-  schoolsList = [
-    "Evocation",
-    "Conjuration",
-    "Divination",
-    "Abjuration",
-    "Enchantment",
-    "Necromancy",
-    "Transmutation",
-    "Illusion",
-  ];
   constructor(
     srcURL,
     contentContainer,
@@ -20,19 +10,21 @@ class Filters {
     activeLevel = 0
   ) {
     this.src = srcURL;
+    this.content = [];
     this.pagination = new Pagination(contentContainer, pageControls);
     this.schoolControls = schoolControls;
     this.levelControls = levelConrols;
     this.favoritesContainer = favoritesContainer;
-    this.searchbarContainer = searchbarContainer;
+    this.searchbar = new Searchbar(
+      searchbarContainer,
+      this.searchContent.bind(this)
+    );
     this.activeLevel = activeLevel;
     this.activeFilter = "";
     this.activeFavorites = false;
-    this.activeSearch = "";
     this.schools = {};
-    this.schoolsList.forEach((school) => (this.schools[school] = 0));
+    schoolsList.forEach((school) => (this.schools[school] = 0));
     this.readFavorites();
-    this.content = [];
   }
   isFavorite(spellIndex) {
     return this.favorites.includes(spellIndex);
@@ -65,7 +57,7 @@ class Filters {
     });
   }
   updateSchoolCounts() {
-    this.schoolsList.forEach((school) => (this.schools[school] = 0));
+    schoolsList.forEach((school) => (this.schools[school] = 0));
     this.pagination.pageContent.forEach(
       (block) => this.schools[block.spell.school.name]++
     );
@@ -104,6 +96,7 @@ class Filters {
     return control;
   }
   searchContent(query) {
+    console.log(this.content);
     const res =
       query !== ""
         ? this.content.filter((block) =>
@@ -116,7 +109,7 @@ class Filters {
     this.renderLevelFilter();
     this.renderFavoritesButton();
     this.renderSchoolsList();
-    this.renderSearchbar();
+    this.searchbar.render();
     this.pagination.render();
   }
   renderSchoolsList() {
@@ -157,14 +150,10 @@ class Filters {
     this.favButton = button;
     this.favoritesContainer.appendChild(button);
   }
-  renderSearchbar() {
-    this.searchbarContainer.innerHTML = "";
-    const input = document.createElement("input");
-    input.type = "text";
-    input.name = "search";
-    input.placeholder = "search spells...";
-    input.addEventListener("change", (e) => this.searchContent(e.target.value));
-    this.searchbarContainer.append(input, faIcon("search"));
+  updateContent(content) {
+    this.content = content;
+    this.pagination.updateContent(this.content);
+    this.updateSchoolCounts();
   }
   async fetchContent() {
     const response = await fetch(
@@ -176,16 +165,12 @@ class Filters {
     const spells = await Promise.all(
       results.map((res) => fetchSpell(res.index))
     );
-    this.content = spells.map((spell) => new SpellBlock(spell, this));
-    this.pagination.updateContent(this.content);
-    this.updateSchoolCounts();
+    this.updateContent(spells.map((spell) => new SpellBlock(spell, this)));
   }
   async fetchFavorites() {
     const spells = await Promise.all(
       this.favorites.map((fav) => fetchSpell(fav))
     );
-    this.content = spells.map((spell) => new SpellBlock(spell, this));
-    this.pagination.updateContent(this.content);
-    this.updateSchoolCounts();
+    this.updateContent(spells.map((spell) => new SpellBlock(spell, this)));
   }
 }

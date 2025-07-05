@@ -67,13 +67,17 @@ class Pagination {
 
   renderPage() {
     this.pageContainer.innerHTML = "";
+    const displayElements = [];
     for (
       let i = (this.currentPage - 1) * this.itemsPerPage;
       i < this.currentPage * this.itemsPerPage && i < this.pageContent.length;
       i++
     ) {
-      this.pageContainer.appendChild(this.pageContent[i].element);
+      displayElements.push(this.pageContent[i].element);
     }
+    this.pageContainer.append(
+      ...(displayElements.length > 0 ? displayElements : [this.emptyPage()])
+    );
   }
 
   renderButtons() {
@@ -169,5 +173,9 @@ class Pagination {
     );
     btn.addEventListener("click", () => this.sortContent(dir));
     return btn;
+  }
+
+  emptyPage() {
+    return createElement("div", ["empty-page"], "No spells found");
   }
 }
