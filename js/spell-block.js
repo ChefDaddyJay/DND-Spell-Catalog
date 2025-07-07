@@ -2,20 +2,26 @@ class SpellBlock {
   constructor(spell, filters) {
     this.spell = spell;
     this.filters = filters;
-    this.element = document.createElement("div");
+    this.element = createElement("div", ["spell-block"]);
+    this.element.setAttribute("data-toggle", this.spell.index);
+    this.modal = new Modal(main, this.spell);
     this.buildElement();
   }
   buildElement() {
     this.element.innerHTML = "";
-    const fav = document.createElement("div");
-    const name = document.createElement("h3");
-    const lvl = document.createElement("div");
-    const school = document.createElement("div");
+    const fav = createElement("div", ["fav"]);
+    const name = createElement("h3", [], this.spell.name);
+    const lvl = createElement(
+      "div",
+      ["spell-level"],
+      `Lv. ${this.spell.level}`
+    );
+    const school = createElement(
+      "div",
+      ["spell-school", "round-pill"],
+      this.spell.school.name
+    );
 
-    this.element.classList.add("spell-block");
-    this.element.setAttribute("data-toggle", this.spell.index);
-
-    fav.classList.add("fav");
     fav.innerHTML = this.filters.isFavorite(this.spell.index)
       ? '<i class="fas fa-star"></i>'
       : '<i class="fa-regular fa-star"></i>';
@@ -27,23 +33,12 @@ class SpellBlock {
       this.buildElement();
     });
 
-    name.innerText = this.spell.name;
-
-    lvl.classList.add("spell-level");
-    lvl.innerText = `Lv. ${this.spell.level}`;
-
-    school.classList.add("spell-school");
-    school.classList.add("round-pill");
-    school.innerText = this.spell.school.name;
-
     this.element.addEventListener("click", () => {
-      const modal =
-        document.getElementById(this.spell.index) || buildModal(this.spell);
       setTimeout(() => {
-        if (modal.classList.contains("open")) {
-          modal.classList.remove("open");
+        if (this.modal.isOpen()) {
+          this.modal.close();
         } else {
-          modal.classList.add("open");
+          this.modal.open();
         }
       }, 100);
     });

@@ -5,9 +5,12 @@ const faIcon = (icon) => {
   return res;
 };
 
-const createElement = (elm, classList = [], text = "") => {
+const createElement = (elm, classList = [], text = "", id = null) => {
   const element = document.createElement(elm);
   element.classList.add(...classList);
   element.innerText = text;
+  if (id) {
+    element.id = id;
+  }
   return element;
 };
